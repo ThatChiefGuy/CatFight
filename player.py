@@ -20,4 +20,3 @@ class Player(pygame.sprite.Sprite):
         distance_y = -(mouse_position[1] - self.rect.y)
         self.angle = math.degrees(math.atan2(distance_y, distance_x))
         self.image = pygame.transform.rotate(self.image_copy, self.angle)
-        print(self.angle)

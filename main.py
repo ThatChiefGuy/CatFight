@@ -13,7 +13,7 @@ class Game:
     def draw(self):
         self.screen.fill((250, 0, 250))
         self.screen.blit(self.player.image, (self.player.rect.x - int(self.player.image.get_width()) / 2,
-                                            self.player.rect.y - int(self.player.image.get_height()) / 2))
+                                             self.player.rect.y - int(self.player.image.get_height()) / 2))
         pygame.display.update()
 
     def main(self):
