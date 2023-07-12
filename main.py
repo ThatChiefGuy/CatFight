@@ -13,7 +13,6 @@ class Game:
 
     def draw(self):
         self.screen.fill((250, 0, 250))
-
         pygame.display.update()
 
     def main(self):
