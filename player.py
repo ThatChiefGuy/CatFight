@@ -6,27 +6,27 @@ import math
 class Player(pygame.sprite.Sprite):
     def __init__(self, image):
         super().__init__()
-        self.angle = 0
+        self.angle = 90
         self.image_copy = pygame.transform.scale(image, snipets.player_image_size)
-        self.image = pygame.transform.rotate(self.image_copy, self.angle)
+        self.image = pygame.transform.rotate(self.image_copy, 0)
         self.rect = self.image.get_rect(center=snipets.player_starting_position)
         snipets.player_group.add(self)
 
-    def update(self, mouse_position):
-        self.rotate(mouse_position)
-        self.movement(mouse_position)
+    def update(self, key_input):
+        self.rotate(key_input)
+        self.movement()
 
-    def rotate(self, mouse_position):
-        distance_x = mouse_position[0] - self.rect.x
-        distance_y = -(mouse_position[1] - self.rect.y)
-        self.angle = math.degrees(math.atan2(distance_y, distance_x))
+    def rotate(self, key_input):
+        if key_input[ord("w")]:
+            self.angle += snipets.player_rotation_speed
+        if key_input[ord("s")]:
+            self.angle -= snipets.player_rotation_speed
+
         self.image = pygame.transform.rotate(self.image_copy, self.angle)
 
-    def movement(self, mouse_position):
-        radians = math.atan2(mouse_position[1] - self.rect.y, mouse_position[0] - self.rect.x)
-        dx = math.cos(radians)
-        dy = math.sin(radians)
-        self.rect.x += dx * snipets.player_speed
-        self.rect.y += dy * snipets.player_speed
-
-
+    def movement(self):
+        dx = snipets.player_speed * math.cos(self.angle)
+        dy = snipets.player_speed * math.sin(self.angle)
+        self.rect.x += dx
+        self.rect.y += dy
+        print(dy, dx)
