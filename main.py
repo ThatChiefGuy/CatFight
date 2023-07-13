@@ -8,6 +8,7 @@ import Sprite_sheet
 
 class Game:
     def __init__(self, window_height, window_width):
+        self.screen_size = window_width, window_height
         self.screen = pygame.display.set_mode((window_height, window_width))
         self.main_clock = pygame.time.Clock()
         main_sprite_sheet_image = pygame.image.load("Assets/sprites.png")
@@ -26,7 +27,7 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
-            snipets.player_group.update(pygame.key.get_pressed())
+            snipets.player_group.update(pygame.key.get_pressed(), self.screen_size)
             self.draw()
 
 
