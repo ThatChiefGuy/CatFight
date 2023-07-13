@@ -1,6 +1,6 @@
 import pygame
 import snipets
-
+import Player_gas
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
@@ -10,8 +10,11 @@ class Player(pygame.sprite.Sprite):
         self.image_right = snipets.main_sprite_sheet.get_sprite(148, 0, 68, 55, 2, (0, 0, 0))
         self.image = self.normal_image
         self.rect = self.image.get_rect()
+        self.rect.center = snipets.player_starting_position
         self.animation_state = "forward"
         snipets.player_group.add(self)
+        self.gas_time = 0
+        self.gas_spawn_time = snipets.gas_spawn_time
 
     def update(self, keys_pressed, window_size):
         self.movement(keys_pressed)
@@ -33,7 +36,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.x += snipets.player_speed
             self.animation_state = "right"
 
-    def collisions(self, window_height, window_width):
+    def collisions(self, window_width, window_height):
         if self.rect.top < 0:
             self.rect.top = 0
 
@@ -57,3 +60,14 @@ class Player(pygame.sprite.Sprite):
             self.image = self.image_right
 
         self.animation_state = "forward"
+
+        self.gas_time += 1
+
+        if self.gas_time >= self.gas_spawn_time:
+            self.gas_time = 0
+            Player_gas.Gas(self.rect.center)
+
+
+
+
+
