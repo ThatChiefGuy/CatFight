@@ -1,6 +1,9 @@
 import pygame
+
+import Bullet
 import snipets
 import Player_gas
+
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
@@ -19,6 +22,7 @@ class Player(pygame.sprite.Sprite):
     def update(self, keys_pressed, window_size):
         self.movement(keys_pressed)
         self.collisions(window_size[0], window_size[1])
+        self.shooting(keys_pressed)
         self.animation()
 
     def movement(self, keys_pressed):
@@ -66,6 +70,12 @@ class Player(pygame.sprite.Sprite):
         if self.gas_time >= self.gas_spawn_time:
             self.gas_time = 0
             Player_gas.Gas(self.rect.center)
+
+    def shooting(self, keys_pressed):
+        snipets.bullet_cooldown_timer += 1
+        if keys_pressed[ord(" ")] and snipets.bullet_cooldown_timer >= snipets.bullet_cooldown:
+            Bullet.Bullet(self.rect.center)
+            snipets.bullet_cooldown_timer = 0
 
 
 

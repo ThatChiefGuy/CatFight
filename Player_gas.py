@@ -9,7 +9,7 @@ class Gas(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = starting_position
         self.disappear_timeer = 0
-        self.disappear_time = 20
+        self.disappear_time = 40
         snipets.gas_group.add(self)
 
     def update(self):
