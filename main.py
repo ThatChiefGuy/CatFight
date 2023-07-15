@@ -1,19 +1,25 @@
 import pygame
+
+import Bullet
 import player
 import snipets
+import Sprite_sheet
 
 
 class Game:
     def __init__(self, window_height, window_width):
         self.screen = pygame.display.set_mode((window_height, window_width))
         self.main_clock = pygame.time.Clock()
-        self.player_image = pygame.image.load("Assets/player_plane.gif").convert_alpha()
-        self.player = player.Player(pygame.transform.flip(self.player_image, True, False))
+        main_sprite_sheet_image = pygame.image.load("Assets/sprites.png")
+        snipets.bullet_image = pygame.image.load("Assets/bullet_image.png")
+        snipets.main_sprite_sheet = Sprite_sheet.SpriteSheet(main_sprite_sheet_image)
+        self.player = player.Player()
 
     def draw(self):
         self.screen.fill((250, 0, 250))
-        self.screen.blit(self.player.image, (self.player.rect.x - int(self.player.image.get_width()) / 2,
-                                             self.player.rect.y - int(self.player.image.get_height()) / 2))
+        snipets.gas_group.draw(self.screen)
+        snipets.bullet_group.draw(self.screen)
+        snipets.player_group.draw(self.screen)
         pygame.display.update()
 
     def main(self):
@@ -23,10 +29,12 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
-            snipets.player_group.update(pygame.mouse.get_pos())
+            snipets.player_group.update(pygame.key.get_pressed(), (snipets.screen_width, snipets.screen_height))
+            snipets.gas_group.update()
+            snipets.bullet_group.update()
             self.draw()
 
 
 if __name__ == "__main__":
-    game = Game(1000, 1000)
+    game = Game(snipets.screen_width, snipets.screen_height)
     game.main()
