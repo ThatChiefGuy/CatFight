@@ -11,14 +11,19 @@ class Player(pygame.sprite.Sprite):
         self.normal_image = snipets.main_sprite_sheet.get_sprite(0, 0, 68, 55, 2, (0, 0, 0))
         self.image_left = snipets.main_sprite_sheet.get_sprite(74, 0, 68, 55, 2, (0, 0, 0))
         self.image_right = snipets.main_sprite_sheet.get_sprite(148, 0, 68, 55, 2, (0, 0, 0))
+        self.animation_state = "forward"
         self.image = self.normal_image
+        self.propeller_image1 = snipets.main_sprite_sheet.get_sprite(123, 62, 27, 10, 2, (10, 0, 0))
+        self.propeller_image2 = snipets.main_sprite_sheet.get_sprite(150, 62, 27, 10, 2, (10, 0, 0))
+        self.propeller_image3 = snipets.main_sprite_sheet.get_sprite(150, 62, 27, 10, 2, (10, 0, 0))
+
         self.rect = self.image.get_rect()
         self.rect.center = snipets.player_starting_position
-        self.animation_state = "forward"
-        snipets.player_group.add(self)
+
         self.gas_time = 0
         self.gas_spawn_time = snipets.gas_spawn_time
 
+        snipets.player_group.add(self)
     def update(self, keys_pressed, window_size):
         self.movement(keys_pressed)
         self.collisions(window_size[0], window_size[1])

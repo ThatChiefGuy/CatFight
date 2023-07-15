@@ -20,6 +20,8 @@ class Game:
         snipets.gas_group.draw(self.screen)
         snipets.bullet_group.draw(self.screen)
         snipets.player_group.draw(self.screen)
+        self.screen.blit(self.player.propeller_image1, (100, 100))
+        self.screen.blit(self.player.propeller_image2, (200, 100))
         pygame.display.update()
 
     def main(self):
