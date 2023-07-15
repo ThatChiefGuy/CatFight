@@ -51,6 +51,9 @@ class Player(pygame.sprite.Sprite):
             self.rect.x += snipets.player_speed
             self.animation_state = "right"
 
+        if keys_pressed[ord("a")] and keys_pressed[ord("d")]:
+            self.animation_state = "forward"
+
     def collisions(self, window_width, window_height):
         if self.rect.top < self.propeller_image.get_size()[1]:
             self.rect.top = self.propeller_image.get_size()[1]
