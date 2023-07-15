@@ -1,6 +1,5 @@
 import pygame
 
-import bullet
 import player
 import snipets
 import sprite_sheet
@@ -21,7 +20,8 @@ class Game:
         snipets.bullet_group.draw(self.screen)
         snipets.player_group.draw(self.screen)
         self.screen.blit(self.player.propeller_image,
-                         (self.player.rect.left + self.player.rect.width / 2 - self.player.propeller_image.get_size()[0] / 2,
+                         (self.player.rect.left + self.player.rect.width / 2 -
+                          self.player.propeller_image.get_size()[0] / 2,
                           self.player.rect.top - self.player.propeller_image.get_size()[1] / 2))
         pygame.display.update()
 

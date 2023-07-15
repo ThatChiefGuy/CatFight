@@ -99,7 +99,6 @@ class Player(pygame.sprite.Sprite):
         if self.propeller_state == 3:
             self.propeller_image = self.propeller_image3
 
-
     def shooting(self, keys_pressed):
         snipets.bullet_cooldown_timer += 1
         if keys_pressed[ord(" ")] and snipets.bullet_cooldown_timer >= snipets.bullet_cooldown:
