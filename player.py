@@ -81,7 +81,7 @@ class Player(pygame.sprite.Sprite):
 
         if self.gas_time >= self.gas_spawn_time:
             self.gas_time = 0
-            player_gas.Gas(self.rect.center)
+            player_gas.Gas((self.rect.center[0], self.rect.bottom))
 
         if self.propeller_timer >= self.propeller_time:
             self.propeller_state += 1

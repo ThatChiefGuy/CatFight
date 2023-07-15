@@ -15,7 +15,7 @@ class Game:
         self.player = player.Player()
 
     def draw(self):
-        self.screen.fill((0, 150, 250))
+        self.screen.fill((0, 200, 250))
         snipets.gas_group.draw(self.screen)
         snipets.bullet_group.draw(self.screen)
         snipets.player_group.draw(self.screen)
