@@ -12,3 +12,6 @@ class Bullet(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.y -= snipets.bullet_speed
+        if self.rect.bottom < 0:
+            self.kill()
+

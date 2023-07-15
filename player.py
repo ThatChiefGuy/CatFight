@@ -37,23 +37,23 @@ class Player(pygame.sprite.Sprite):
         self.animation()
 
     def movement(self, keys_pressed):
-        if keys_pressed[ord("s")]:
+        if keys_pressed[ord("s")] or keys_pressed[pygame.K_DOWN]:
             self.rect.y += snipets.player_speed
 
-        if keys_pressed[ord("w")]:
+        if keys_pressed[ord("w")] or keys_pressed[pygame.K_UP]:
             self.rect.y -= snipets.player_speed
 
-        if keys_pressed[ord("a")]:
+        if keys_pressed[ord("a")] or keys_pressed[pygame.K_LEFT]:
             self.rect.x -= snipets.player_speed
             self.animation_state = "left"
 
-        if keys_pressed[ord("d")]:
+        if keys_pressed[ord("d")] or keys_pressed[pygame.K_RIGHT]:
             self.rect.x += snipets.player_speed
             self.animation_state = "right"
 
     def collisions(self, window_width, window_height):
-        if self.rect.top < 0:
-            self.rect.top = 0
+        if self.rect.top < self.propeller_image.get_size()[1]:
+            self.rect.top = self.propeller_image.get_size()[1]
 
         if self.rect.bottom > window_height:
             self.rect.bottom = window_height
