@@ -1,8 +1,8 @@
 import pygame
 
-import Bullet
+import bullet
 import snipets
-import Player_gas
+import player_gas
 
 
 class Player(pygame.sprite.Sprite):
@@ -15,7 +15,7 @@ class Player(pygame.sprite.Sprite):
         self.image = self.normal_image
         self.propeller_image1 = snipets.main_sprite_sheet.get_sprite(123, 62, 27, 10, 2, (10, 0, 0))
         self.propeller_image2 = snipets.main_sprite_sheet.get_sprite(150, 62, 27, 10, 2, (10, 0, 0))
-        self.propeller_image3 = snipets.main_sprite_sheet.get_sprite(150, 62, 27, 10, 2, (10, 0, 0))
+        self.propeller_image3 = snipets.main_sprite_sheet.get_sprite(177, 62, 27, 10, 2, (10, 0, 0))
 
         self.rect = self.image.get_rect()
         self.rect.center = snipets.player_starting_position
@@ -24,6 +24,7 @@ class Player(pygame.sprite.Sprite):
         self.gas_spawn_time = snipets.gas_spawn_time
 
         snipets.player_group.add(self)
+
     def update(self, keys_pressed, window_size):
         self.movement(keys_pressed)
         self.collisions(window_size[0], window_size[1])
@@ -74,15 +75,10 @@ class Player(pygame.sprite.Sprite):
 
         if self.gas_time >= self.gas_spawn_time:
             self.gas_time = 0
-            Player_gas.Gas(self.rect.center)
+            player_gas.Gas(self.rect.center)
 
     def shooting(self, keys_pressed):
         snipets.bullet_cooldown_timer += 1
         if keys_pressed[ord(" ")] and snipets.bullet_cooldown_timer >= snipets.bullet_cooldown:
-            Bullet.Bullet(self.rect.center)
+            bullet.Bullet(self.rect.center)
             snipets.bullet_cooldown_timer = 0
-
-
-
-
-
