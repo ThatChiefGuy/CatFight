@@ -13,9 +13,14 @@ class Player(pygame.sprite.Sprite):
         self.image_right = snipets.main_sprite_sheet.get_sprite(148, 0, 68, 55, 2, (0, 0, 0))
         self.animation_state = "forward"
         self.image = self.normal_image
-        self.propeller_image1 = snipets.main_sprite_sheet.get_sprite(123, 62, 27, 10, 2, (10, 0, 0))
-        self.propeller_image2 = snipets.main_sprite_sheet.get_sprite(150, 62, 27, 10, 2, (10, 0, 0))
-        self.propeller_image3 = snipets.main_sprite_sheet.get_sprite(177, 62, 27, 10, 2, (10, 0, 0))
+
+        self.propeller_image1 = snipets.main_sprite_sheet.get_sprite(123, 62, 27, 10, 2, (0, 0, 0))
+        self.propeller_image2 = snipets.main_sprite_sheet.get_sprite(150, 62, 27, 10, 2, (0, 0, 0))
+        self.propeller_image3 = snipets.main_sprite_sheet.get_sprite(177, 62, 27, 10, 2, (0, 0, 0))
+        self.propeller_image = self.propeller_image1
+        self.propeller_timer = 0
+        self.propeller_time = 5
+        self.propeller_state = 1
 
         self.rect = self.image.get_rect()
         self.rect.center = snipets.player_starting_position
@@ -72,10 +77,28 @@ class Player(pygame.sprite.Sprite):
         self.animation_state = "forward"
 
         self.gas_time += 1
+        self.propeller_timer += 1
 
         if self.gas_time >= self.gas_spawn_time:
             self.gas_time = 0
             player_gas.Gas(self.rect.center)
+
+        if self.propeller_timer >= self.propeller_time:
+            self.propeller_state += 1
+            self.propeller_timer = 0
+
+        if self.propeller_state > 3:
+            self.propeller_state = 1
+
+        if self.propeller_state == 1:
+            self.propeller_image = self.propeller_image1
+
+        if self.propeller_state == 2:
+            self.propeller_image = self.propeller_image2
+
+        if self.propeller_state == 3:
+            self.propeller_image = self.propeller_image3
+
 
     def shooting(self, keys_pressed):
         snipets.bullet_cooldown_timer += 1
