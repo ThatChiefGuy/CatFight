@@ -1,8 +1,8 @@
 import pygame
 
-import Bullet
+import bullet
 import snipets
-import Player_gas
+import player_gas
 
 
 class Player(pygame.sprite.Sprite):
@@ -13,9 +13,14 @@ class Player(pygame.sprite.Sprite):
         self.image_right = snipets.main_sprite_sheet.get_sprite(148, 0, 68, 55, 2, (0, 0, 0))
         self.animation_state = "forward"
         self.image = self.normal_image
-        self.propeller_image1 = snipets.main_sprite_sheet.get_sprite(123, 62, 27, 10, 2, (10, 0, 0))
-        self.propeller_image2 = snipets.main_sprite_sheet.get_sprite(150, 62, 27, 10, 2, (10, 0, 0))
-        self.propeller_image3 = snipets.main_sprite_sheet.get_sprite(150, 62, 27, 10, 2, (10, 0, 0))
+
+        self.propeller_image1 = snipets.main_sprite_sheet.get_sprite(123, 62, 27, 10, 2, (0, 0, 0))
+        self.propeller_image2 = snipets.main_sprite_sheet.get_sprite(150, 62, 27, 10, 2, (0, 0, 0))
+        self.propeller_image3 = snipets.main_sprite_sheet.get_sprite(177, 62, 27, 10, 2, (0, 0, 0))
+        self.propeller_image = self.propeller_image1
+        self.propeller_timer = 0
+        self.propeller_time = 5
+        self.propeller_state = 1
 
         self.rect = self.image.get_rect()
         self.rect.center = snipets.player_starting_position
@@ -24,6 +29,7 @@ class Player(pygame.sprite.Sprite):
         self.gas_spawn_time = snipets.gas_spawn_time
 
         snipets.player_group.add(self)
+
     def update(self, keys_pressed, window_size):
         self.movement(keys_pressed)
         self.collisions(window_size[0], window_size[1])
@@ -31,23 +37,23 @@ class Player(pygame.sprite.Sprite):
         self.animation()
 
     def movement(self, keys_pressed):
-        if keys_pressed[ord("s")]:
+        if keys_pressed[ord("s")] or keys_pressed[pygame.K_DOWN]:
             self.rect.y += snipets.player_speed
 
-        if keys_pressed[ord("w")]:
+        if keys_pressed[ord("w")] or keys_pressed[pygame.K_UP]:
             self.rect.y -= snipets.player_speed
 
-        if keys_pressed[ord("a")]:
+        if keys_pressed[ord("a")] or keys_pressed[pygame.K_LEFT]:
             self.rect.x -= snipets.player_speed
             self.animation_state = "left"
 
-        if keys_pressed[ord("d")]:
+        if keys_pressed[ord("d")] or keys_pressed[pygame.K_RIGHT]:
             self.rect.x += snipets.player_speed
             self.animation_state = "right"
 
     def collisions(self, window_width, window_height):
-        if self.rect.top < 0:
-            self.rect.top = 0
+        if self.rect.top < self.propeller_image.get_size()[1]:
+            self.rect.top = self.propeller_image.get_size()[1]
 
         if self.rect.bottom > window_height:
             self.rect.bottom = window_height
@@ -71,18 +77,30 @@ class Player(pygame.sprite.Sprite):
         self.animation_state = "forward"
 
         self.gas_time += 1
+        self.propeller_timer += 1
 
         if self.gas_time >= self.gas_spawn_time:
             self.gas_time = 0
-            Player_gas.Gas(self.rect.center)
+            player_gas.Gas(self.rect.center)
+
+        if self.propeller_timer >= self.propeller_time:
+            self.propeller_state += 1
+            self.propeller_timer = 0
+
+        if self.propeller_state > 3:
+            self.propeller_state = 1
+
+        if self.propeller_state == 1:
+            self.propeller_image = self.propeller_image1
+
+        if self.propeller_state == 2:
+            self.propeller_image = self.propeller_image2
+
+        if self.propeller_state == 3:
+            self.propeller_image = self.propeller_image3
 
     def shooting(self, keys_pressed):
         snipets.bullet_cooldown_timer += 1
         if keys_pressed[ord(" ")] and snipets.bullet_cooldown_timer >= snipets.bullet_cooldown:
-            Bullet.Bullet(self.rect.center)
+            bullet.Bullet(self.rect.center)
             snipets.bullet_cooldown_timer = 0
-
-
-
-
-

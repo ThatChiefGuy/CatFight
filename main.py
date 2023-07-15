@@ -1,9 +1,8 @@
 import pygame
 
-import Bullet
 import player
 import snipets
-import Sprite_sheet
+import sprite_sheet
 
 
 class Game:
@@ -12,16 +11,18 @@ class Game:
         self.main_clock = pygame.time.Clock()
         main_sprite_sheet_image = pygame.image.load("Assets/sprites.png")
         snipets.bullet_image = pygame.image.load("Assets/bullet_image.png")
-        snipets.main_sprite_sheet = Sprite_sheet.SpriteSheet(main_sprite_sheet_image)
+        snipets.main_sprite_sheet = sprite_sheet.SpriteSheet(main_sprite_sheet_image)
         self.player = player.Player()
 
     def draw(self):
-        self.screen.fill((250, 0, 250))
+        self.screen.fill((0, 150, 250))
         snipets.gas_group.draw(self.screen)
         snipets.bullet_group.draw(self.screen)
         snipets.player_group.draw(self.screen)
-        self.screen.blit(self.player.propeller_image1, (100, 100))
-        self.screen.blit(self.player.propeller_image2, (200, 100))
+        self.screen.blit(self.player.propeller_image,
+                         (self.player.rect.left + self.player.rect.width / 2 -
+                          self.player.propeller_image.get_size()[0] / 2,
+                          self.player.rect.top - self.player.propeller_image.get_size()[1] / 2))
         pygame.display.update()
 
     def main(self):
