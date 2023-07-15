@@ -14,6 +14,6 @@ gas_spawn_time = 10
 
 bullet_image = None
 bullet_speed = 10
-bullet_cooldown = 20
+bullet_cooldown = 10
 bullet_cooldown_timer = 0
 bullet_group = pygame.sprite.Group()
