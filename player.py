@@ -19,7 +19,7 @@ class Player(pygame.sprite.Sprite):
         self.propeller_image3 = snipets.main_sprite_sheet.get_sprite(177, 62, 27, 10, 2, (0, 0, 0))
         self.propeller_image = self.propeller_image1
         self.propeller_timer = 0
-        self.propeller_time = 5
+        self.propeller_time = 1
         self.propeller_state = 1
 
         self.rect = self.image.get_rect()
@@ -51,7 +51,8 @@ class Player(pygame.sprite.Sprite):
             self.rect.x += snipets.player_speed
             self.animation_state = "right"
 
-        if keys_pressed[ord("a")] and keys_pressed[ord("d")]:
+        if self.animation_state == "right" and keys_pressed[ord("a")] \
+                or self.animation_state == "right" and keys_pressed[pygame.K_LEFT]:
             self.animation_state = "forward"
 
     def collisions(self, window_width, window_height):

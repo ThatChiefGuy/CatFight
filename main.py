@@ -1,8 +1,20 @@
 import pygame
 
+import clouds
 import player
 import snipets
 import sprite_sheet
+
+
+def load_images():
+    snipets.bullet_image = pygame.image.load("Assets/bullet_image.png")
+    snipets.cloud_images = [snipets.main_sprite_sheet.get_sprite(0, 96, 100, 70, 2, (0, 0, 0)),
+                            snipets.main_sprite_sheet.get_sprite(101, 99, 98, 62, 2, (0, 0, 0)),
+                            snipets.main_sprite_sheet.get_sprite(200, 96, 37, 32, 2, (0, 0, 0)),
+                            snipets.main_sprite_sheet.get_sprite(0, 168, 51, 35, 2, (0, 0, 0)),
+                            snipets.main_sprite_sheet.get_sprite(74, 169, 62, 47, 2, (0, 0, 0)),
+                            snipets.main_sprite_sheet.get_sprite(160, 160, 97, 61, 2, (0, 0, 0)),
+                            snipets.main_sprite_sheet.get_sprite(7, 217, 115, 61, 2, (0, 0, 0))]
 
 
 class Game:
@@ -10,12 +22,13 @@ class Game:
         self.screen = pygame.display.set_mode((window_height, window_width))
         self.main_clock = pygame.time.Clock()
         main_sprite_sheet_image = pygame.image.load("Assets/sprites.png")
-        snipets.bullet_image = pygame.image.load("Assets/bullet_image.png")
         snipets.main_sprite_sheet = sprite_sheet.SpriteSheet(main_sprite_sheet_image)
+        load_images()
         self.player = player.Player()
 
     def draw(self):
         self.screen.fill((0, 200, 250))
+        snipets.cloud_group.draw(self.screen)
         snipets.gas_group.draw(self.screen)
         snipets.bullet_group.draw(self.screen)
         snipets.player_group.draw(self.screen)
@@ -31,9 +44,16 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
+
+            snipets.cloud_timer += 1
+            if snipets.cloud_timer >= snipets.cloud_time:
+                clouds.Cloud()
+                snipets.cloud_timer = 0
+
             snipets.player_group.update(pygame.key.get_pressed(), (snipets.screen_width, snipets.screen_height))
             snipets.gas_group.update()
             snipets.bullet_group.update()
+            snipets.cloud_group.update()
             self.draw()
 
 

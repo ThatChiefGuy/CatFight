@@ -17,3 +17,9 @@ bullet_speed = 10
 bullet_cooldown = 10
 bullet_cooldown_timer = 0
 bullet_group = pygame.sprite.Group()
+
+cloud_group = pygame.sprite.Group()
+cloud_images = []
+cloud_speed = 3
+cloud_time = 20
+cloud_timer = 0
