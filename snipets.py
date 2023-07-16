@@ -20,6 +20,6 @@ bullet_group = pygame.sprite.Group()
 
 cloud_group = pygame.sprite.Group()
 cloud_images = []
-cloud_speed = 3
-cloud_time = 20
+cloud_speed = 5
+cloud_time = 14
 cloud_timer = 0
