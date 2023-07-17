@@ -5,11 +5,11 @@ import snipets
 class Gas(pygame.sprite.Sprite):
     def __init__(self, starting_position):
         super().__init__()
-        self.image = snipets.main_sprite_sheet.get_sprite(100, 71, 13, 27, 2, (0, 0, 0))
+        self.image = snipets.main_sprite_sheet.get_sprite(103, 72, 9, 8, 2, (0, 0, 0))
         self.rect = self.image.get_rect()
         self.rect.center = starting_position
         self.disappear_timeer = 0
-        self.disappear_time = 80
+        self.disappear_time = 50
         snipets.gas_group.add(self)
 
     def update(self):
